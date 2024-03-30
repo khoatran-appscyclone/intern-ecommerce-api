@@ -3,10 +3,11 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { ExceptionInterceptor } from './common/interceptors/exception.interceptor';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 /** Starts the application */
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -31,7 +32,6 @@ async function bootstrap(): Promise<void> {
   SwaggerModule.setup('api', app, document, {
     customSiteTitle: 'eCommerce Swagger API',
   });
-
   await app.listen(process.env.PORT || 8070);
 }
 bootstrap();

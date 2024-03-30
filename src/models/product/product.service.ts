@@ -6,6 +6,7 @@ import { FindProductsDto } from './dto/find-products.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
 import { File } from './types/file';
+import createFileStorageUrl from 'src/util/createFileStorageUrl';
 
 /** Responsible for managing products in the database.
  * CRUD endpoints are available for products.
@@ -39,9 +40,11 @@ export class ProductService {
 
   /** Uploads new product picture */
   async uploadPicture(id: string, file: File): Promise<Product> {
+    // console.log(file.filename);
+
     return this.prisma.product.update({
       where: { id },
-      data: { picture: file.filename },
+      data: { picture: createFileStorageUrl(file.filename) },
     });
   }
 
