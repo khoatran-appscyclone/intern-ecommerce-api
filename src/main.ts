@@ -19,6 +19,8 @@ async function bootstrap(): Promise<void> {
 
   app.useGlobalInterceptors(new ExceptionInterceptor());
 
+  app.enableCors();
+
   const config = new DocumentBuilder()
     .setTitle('eCommerce Back End')
     .setDescription('Back End for eCommerces')
